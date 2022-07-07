@@ -1,0 +1,41 @@
+---
+# kubectl create namespace argocd
+# kubectl apply -n argocd -f https://raw.githubusercontent.com/codefresh-contrib/gitops-certification-examples/main/argocd-noauth/install.yaml
+# kubectl get pods -n argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: argocd-server
+  managedFields:
+  name: argocd-server-nodeport
+  namespace: argocd
+spec:
+  ports:
+  - nodePort: 30443
+    port: 8080
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: argocd-server
+  type: NodePort
+---
+# kubectl apply -f service.yml
+---
+# getting admin password to first login into argocd UI
+# kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > admin-pass.txt
+---
+# installing argocd cli
+# curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.5/argocd-linux-amd64
+# chmod +x /usr/local/bin/argocd
+---
+# login in localhost 
+# argocd login localhost:30443 --insecure
+---
+# creating an app via cli
+# argocd app create {APP NAME} \
+# --project {PROJECT} \
+# --repo {GIT REPO} \--path {APP FOLDER} \
+# --dest-namespace {NAMESPACE} \
+# --dest-server {SERVER URL}
+---
