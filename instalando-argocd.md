@@ -1,4 +1,34 @@
-# How to install ARGO-CD in a kubernetes cluster
+# How to setup local machine to work with kubernetes helm kind and argo cd using argo autopilot
+
+## Install golang
+
+Visit <https://golang.org/download> and then extract the `tar`file in you user home folder, then export PATH to include `$HOME/go/bin`
+
+## Install kind
+
+```sh
+go install sigs.k8s.io/kind@latest
+```
+
+## Install kubectl
+
+```sh
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+## Install helm
+
+```sh
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
+## Init kind cluster
+
+```sh
+kind create cluster
+```
+
+## Install ARGO-CD in a kubernetes cluster
 
 ```sh
 kubectl create namespace argocd
